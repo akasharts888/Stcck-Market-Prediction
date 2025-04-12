@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Stock Price Prediction Results</h1>
+    </header>
+
+    <div class="container result-container">
+        <h2>Current Price: ${{ current_price | round(2) }}</h2>
+        <h3>Historical Prices & SMAs</h3>
+        <!-- Display Historical Data Graph -->
+        <img src="{{ url_for('static', filename='images/historical_plot.png') }}" alt="Historical Prices & SMAs">
+
+        <!-- Display Predicted Prices Graph -->
+        <h3>Predicted Prices</h3>
+        <img src="{{ url_for('static', filename='images/predicted_plot.png') }}" alt="Predicted Prices">
+
+        <h3>Predicted Prices:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Predicted Price ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, price in predicted_data %}
+                <tr>
+                        <td>{{ date.strftime('%Y-%m-%d') }}</td>
+                        <td>${{ price|round(2) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+        
+        <a href="/" style="color: #007BFF; text-decoration: none; font-size: 18px;">Go back to Prediction Form</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Stock Prediction App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
